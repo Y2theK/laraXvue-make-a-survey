@@ -1,3 +1,4 @@
+import { method } from "lodash";
 import { createStore } from "vuex";
 const store = createStore({
     state: {
@@ -21,6 +22,21 @@ const store = createStore({
     actions: {
         register({ commit }, user) {
             return fetch("http://127.0.0.1:8000/api/register", {
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+                method: "POST",
+                body: JSON.stringify(user),
+            })
+                .then((res) => res.json())
+                .then((res) => {
+                    commit("setUser", res);
+                    return res;
+                });
+        },
+        login({ commit }, user) {
+            return fetch("http://127.0.0.1:8000/api/login", {
                 headers: {
                     "Content-Type": "application/json",
                     Accept: "application/json",
