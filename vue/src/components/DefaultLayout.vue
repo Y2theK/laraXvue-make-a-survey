@@ -179,13 +179,11 @@ export default {
     const store = useStore();
     const router = useRouter();
     function logout() {
-      router.push({
-        name: "Login",
+      store.dispatch("logout").then((res) => {
+        router.push({
+          name: "Login",
+        });
       });
-      store.commit("logout");
-      // store.dispatch("logout").then(() => {
-
-      // });
     }
     return {
       user: computed(() => store.state.user.data),
