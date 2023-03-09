@@ -1,8 +1,9 @@
 <?php
 
+namespace App\Http\Controllers;
+
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
