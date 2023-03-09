@@ -1,5 +1,6 @@
-import { method } from "lodash";
+import axios from "axios";
 import { createStore } from "vuex";
+import axiosClient from "../axios";
 const store = createStore({
     state: {
         user: {
@@ -36,19 +37,34 @@ const store = createStore({
                 });
         },
         login({ commit }, user) {
-            return fetch("http://127.0.0.1:8000/api/login", {
-                headers: {
-                    "Content-Type": "application/json",
-                    Accept: "application/json",
-                },
-                method: "POST",
-                body: JSON.stringify(user),
-            })
-                .then((res) => res.json())
-                .then((res) => {
-                    commit("setUser", res);
-                    return res;
-                });
+            //method 1
+            // return fetch("http://127.0.0.1:8000/api/login", {
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //         Accept: "application/json",
+            //     },
+            //     method: "POST",
+            //     body: JSON.stringify(user),
+            // })
+            //     .then((res) => res.json())
+            //     .then((res) => {
+            //         commit("setUser", res);
+            //         return res;
+            //     });
+
+            //method 2
+            // return axios
+            //     .post("http://127.0.0.1:8000/api/login", user)
+            //     .then((res) => {
+            //         commit("setUser", res);
+            //         return res;
+            //     });
+
+            //method 3
+            return axiosClient.post("/login", user).then(({ data }) => {
+                commit("setUser", data);
+                return data;
+            });
         },
     },
     modules: {},

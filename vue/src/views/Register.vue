@@ -106,6 +106,12 @@
           </span>
           Sign Up
         </button>
+        <div
+          v-if="errorMsg"
+          class="py-2 text-red-700 text-center text-sm rounded"
+        >
+          {{ errorMsg }}
+        </div>
       </div>
     </form>
   </div>
@@ -113,8 +119,10 @@
 
 <script setup>
 import store from "../store";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { LockClosedIcon } from "@heroicons/vue/20/solid";
+const errorMsg = ref("");
 const user = {
   name: "",
   email: "",
