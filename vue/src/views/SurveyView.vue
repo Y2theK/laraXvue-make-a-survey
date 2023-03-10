@@ -92,7 +92,7 @@
               >Expire Date</label
             >
             <input
-              type="date"
+              type="datetime-local"
               name="expire_date"
               id="expire_date"
               v-model="surveyData.expire_date"
@@ -130,7 +130,7 @@
               <button
                 type="button"
                 @click="addQuestion()"
-                class="flex items-center text-sm py-1 px-4 rounded-sm text-white bg-gray-600 hover:bg-gray-700"
+                class="flex items-center text-sm py-1 px-4 text-white bg-[rgba(31,41,55)] rounded-md hover:bg-[#3c4e66]"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -171,7 +171,7 @@
           <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
             <button
               type="submit"
-              class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-[#6366f1] hover:bg-[#3b42f9] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Save
             </button>

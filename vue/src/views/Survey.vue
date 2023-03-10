@@ -5,7 +5,7 @@
       <h1 class="text-3xl font-bold tracking-tight text-gray-900">Survey</h1>
       <router-link
         :to="{ name: 'SurveyCreate' }"
-        class="py-2 px-3 text-white flex bg-emerald-500 rounded-md hover:bg-emerald-600"
+        class="py-2 px-3 text-white flex bg-[rgba(31,41,55)] rounded-md hover:bg-[#3c4e66]"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -36,7 +36,7 @@
         <div class="flex justify-between items-center mt-3">
           <router-link
             :to="{ name: 'SurveyView', params: { id: survey.id } }"
-            class="flex items-center py-2 px-4 border border-transparent text-sm rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            class="flex items-center py-2 px-4 border border-transparent text-sm rounded-md text-white bg-[#6366f1] hover:bg-[#3b42f9] focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             ><svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

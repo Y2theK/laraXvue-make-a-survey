@@ -5,7 +5,7 @@
       <div class="flex items-center justify-center">
         <button
           type="button"
-          class="flex items-center text-xs py-1 px-3 mr-2 rounded-sm text-white bg-gray-600 hover:bg-gray-700"
+          class="flex items-center text-xs py-1 px-3 mr-2 text-white bg-[rgba(31,41,55)] rounded-md hover:bg-[#3c4e66]"
           @click="addQuestion()"
         >
           Add
@@ -25,7 +25,7 @@
         <button
           type="button "
           @click="deleteQuestion()"
-          class="flex items-center text-xs py-1 px-3 rounded-sm border border-transparent text-red-500 hover:border-red-600"
+          class="flex items-center text-xs py-1 px-3 rounded-md border border-transparent text-red-500 hover:border-red-600"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -104,7 +104,7 @@
           <button
             type="button"
             @click="addOption()"
-            class="flex items-center text-xs py-1 px-2 rounded-sm text-white bg-gray-600 hover:bg-gray-700"
+            class="flex items-center text-xs py-1 px-2 bg-[rgba(31,41,55)] rounded-md hover:bg-[#3c4e66] text-white"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
