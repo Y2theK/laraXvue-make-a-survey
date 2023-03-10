@@ -25,7 +25,7 @@
         <button
           type="button "
           @click="deleteQuestion()"
-          class="flex items-center text-xs py-1 px-3 rounded-md border border-transparent text-red-500 hover:border-red-600"
+          class="flex items-center text-xs py-1 px-3 rounded-sm border border-transparent text-red-500 hover:border-red-600"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
