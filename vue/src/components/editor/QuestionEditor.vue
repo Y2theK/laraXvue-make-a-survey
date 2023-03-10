@@ -5,7 +5,11 @@
       <div class="flex items-center justify-center">
         <button
           type="button"
+<<<<<<< HEAD
           class="flex items-center text-xs py-1 px-3 mr-2 text-white bg-[rgba(31,41,55)] rounded-md hover:bg-[#3c4e66]"
+=======
+          class="flex items-center text-xs py-1 px-3 mr-2 rounded-sm text-white bg-gray-600 hover:bg-gray-700"
+>>>>>>> 5bc42c34b93d3dcce87c68402ee361e1db880b61
           @click="addQuestion()"
         >
           Add
@@ -25,7 +29,11 @@
         <button
           type="button "
           @click="deleteQuestion()"
+<<<<<<< HEAD
           class="flex items-center text-xs py-1 px-3 rounded-md border border-transparent text-red-500 hover:border-red-600"
+=======
+          class="flex items-center text-xs py-1 px-3 rounded-sm border border-transparent text-red-500 hover:border-red-600"
+>>>>>>> 5bc42c34b93d3dcce87c68402ee361e1db880b61
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
