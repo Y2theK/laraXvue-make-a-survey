@@ -141,22 +141,22 @@ const tmpSurvey = [
                     "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda cumque earum eos esse est ex facilis, iure laboriosam maiores neque nesciunt nulla placeat praesentium quae quos ratione, recusandae totam velit!",
                 data: {
                     options: [
-                        {
-                            uuid: "f8af96f2-1d80-4632-9e9e-b560670e52ea",
-                            text: "REST API",
-                        },
-                        {
-                            uuid: "201c1ff5-23c9-42f9-bfb5-bbc850536440",
-                            text: "E-commerce",
-                        },
-                        {
-                            uuid: "b5c09733-a49e-460a-ba8a-526863010729",
-                            text: "Real Estate",
-                        },
-                        {
-                            uuid: "2abf1cee-f5fb-427c-a220-b5d159ad6513",
-                            text: "All of the above",
-                        },
+                        // {
+                        //     uuid: "f8af96f2-1d80-4632-9e9e-b560670e52ea",
+                        //     text: "REST API",
+                        // },
+                        // {
+                        //     uuid: "201c1ff5-23c9-42f9-bfb5-bbc850536440",
+                        //     text: "E-commerce",
+                        // },
+                        // {
+                        //     uuid: "b5c09733-a49e-460a-ba8a-526863010729",
+                        //     text: "Real Estate",
+                        // },
+                        // {
+                        //     uuid: "2abf1cee-f5fb-427c-a220-b5d159ad6513",
+                        //     text: "All of the above",
+                        // },
                     ],
                 },
             },
@@ -213,6 +213,7 @@ const store = createStore({
             token: sessionStorage.getItem("TOKEN"),
         },
         surveys: [...tmpSurvey],
+        questionTypes: ["text", "select", "radio", "textarea", "checkbox"],
     },
     getters: {},
     mutations: {
