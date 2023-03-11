@@ -15,8 +15,8 @@
             <label for="block text-sm font-medium text-gray-700">Image</label>
             <div class="mt-1 flex items-center">
               <img
-                v-if="surveyData.image"
-                :src="surveyData.image"
+                v-if="surveyData.image_url"
+                :src="surveyData.image_url"
                 :alt="surveyData.title"
                 class="w-64 h-48 object-cover"
               />
@@ -45,6 +45,7 @@
               >
                 <input
                   type="file"
+                  @change="onImageChoose"
                   class="absolute left-0 top-0 right-0 bottom-0 opacity-0 cursor-pointer"
                 />
                 Change
@@ -194,6 +195,7 @@ let surveyData = ref({
   status: false,
   description: null,
   image: null,
+  image_url: null,
   expired_date: null,
   questions: [],
 });
@@ -221,6 +223,18 @@ function deleteQuestion(question) {
   surveyData.value.questions = surveyData.value.questions.filter(
     (q) => q.id !== question.id
   );
+}
+function onImageChoose(ev) {
+  // console.log(ev.target.files);
+  const file = ev.target.files[0];
+  const reader = new FileReader(file);
+  reader.readAsDataURL(file);
+  reader.onload = () => {
+    //the file to send backend and apply validation
+    surveyData.value.image_url = reader.result;
+    //the field to display in fronend
+    surveyData.value.image = reader.result;
+  };
 }
 function questionChange(question) {
   surveyData.value.questions = surveyData.value.questions.map((q) => {
