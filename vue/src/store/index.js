@@ -312,14 +312,14 @@ const store = createStore({
                 response = axiosClient
                     .put(`/surveys/${survey.id}`, survey)
                     .then((res) => {
-                        console.log(res);
+                        // console.log(res);
                         commit("updateSurvey", res.data);
                         return res;
                     });
             } else {
                 console.log("created");
                 response = axiosClient.post("/surveys", survey).then((res) => {
-                    console.log(res);
+                    // console.log(res);
                     commit("saveSurvey", res.data);
                     return res;
                 });
