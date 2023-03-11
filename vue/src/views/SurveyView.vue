@@ -187,7 +187,7 @@
 import PageComponent from "../components/PageComponent.vue";
 import QuestionEditor from "../components/editor/QuestionEditor.vue";
 import store from "../store";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { v4 as uuidv4 } from "uuid";
 let surveyData = ref({
@@ -202,10 +202,23 @@ let surveyData = ref({
 
 const router = useRouter();
 const route = useRoute();
+//watch the current survey and when it change update the surveyData
+watch(
+  () => store.state.currentSurvey.data,
+  (newVal, oldVal) => {
+    surveyData.value = {
+      ...JSON.parse(JSON.stringify(newVal)),
+      status: newVal.status !== "draft",
+    };
+  }
+);
+console.log("id", route.params.id);
 if (route.params.id) {
-  surveyData.value = store.state.surveys.find(
-    (s) => s.id === parseInt(route.params.id)
-  );
+  store.dispatch("getSurvey", route.params.id);
+  // .then((res) => {
+  //   console.log(res);
+  //   surveyData.data = res.data.data;
+  // });
   // console.log(surveyData.value);
 }
 function addQuestion(index) {
@@ -245,9 +258,9 @@ function questionChange(question) {
   });
 }
 function saveSurvey() {
-  console.log("s d", surveyData.value);
+  // console.log("s d", surveyData.value);
   store.dispatch("saveSurvey", surveyData.value).then((res) => {
-    console.log("saveSurvey res", res);
+    // console.log("saveSurvey res", res);
     router.push({
       name: "SurveyView",
       params: { id: res.data.data.id },

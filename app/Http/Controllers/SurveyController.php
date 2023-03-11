@@ -108,6 +108,7 @@ class SurveyController extends Controller
         
 
         $data = $request->validated();
+        dd($data);
         if (isset($data['image'])) {
             $relativePath = $this->saveImage($data['image']);
             $data['image'] = $relativePath;

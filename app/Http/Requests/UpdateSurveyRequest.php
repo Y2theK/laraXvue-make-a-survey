@@ -13,24 +13,24 @@ class UpdateSurveyRequest extends FormRequest
      */
     public function authorize()
     {
-        $survey = $this->route('surveys');
+        $survey = $this->route('survey');
         if ($this->user()->id !== $survey->user_id) {
             return false;
         }
         return true;
     }
-
+    // protected function prepareForValidation()
+    // {
+    //     $this->merge([
+    //         'user_id' => $this->user()->id
+    //     ]);
+    // }
     /**
      * Get the validation rules that apply to the request.
      *
      * @return array
      */
-    protected function prepareForValidation()
-    {
-        $this->merge([
-            'user_id' => $this->user()->id
-        ]);
-    }
+   
     public function rules()
     {
         return [
