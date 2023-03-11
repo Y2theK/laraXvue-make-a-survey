@@ -221,7 +221,8 @@ const store = createStore({
     getters: {},
     mutations: {
         saveSurvey: (state, survey) => {
-            console.log({ survey });
+            // console.log(survey);
+
             state.surveys = [...state.surveys, survey.data];
         },
         updateSurvey: (state, survey) => {
@@ -305,6 +306,7 @@ const store = createStore({
         },
         saveSurvey({ commit }, survey) {
             let response;
+            delete survey.image_url;
             if (survey.id) {
                 console.log("updated");
                 response = axiosClient
