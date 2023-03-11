@@ -23,7 +23,7 @@ class SurveyResource extends JsonResource
             'description' => $this->description,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'expired_at' => $this->expired_at,
+            'expired_date' => $this->expired_date,
             'questions' => []
         ];
     }

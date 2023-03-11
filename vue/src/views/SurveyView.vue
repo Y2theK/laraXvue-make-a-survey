@@ -7,7 +7,7 @@
         </h1>
       </div>
     </template>
-    <form action="" @submit.prevent="saveSurvey">
+    <form action="" @submit.prevent="saveSurvey()">
       <!-- {{ model }} -->
       <div class="shadow sm:rounded-md sm:overflow-hidden">
         <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
@@ -87,15 +87,15 @@
           <!-- Expire Date -->
           <div>
             <label
-              for="expire_date"
+              for="expired_date"
               class="block text-sm font-medium text-gray-700"
               >Expire Date</label
             >
             <input
-              type="datetime-local"
-              name="expire_date"
-              id="expire_date"
-              v-model="surveyData.expire_date"
+              type="date"
+              name="expired_date"
+              id="expired_date"
+              v-model="surveyData.expired_date"
               class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
             />
           </div>
@@ -190,12 +190,11 @@ import { ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { v4 as uuidv4 } from "uuid";
 let surveyData = ref({
-  id: "",
   title: "",
   status: false,
   description: null,
   image: null,
-  expire_date: null,
+  expired_date: null,
   questions: [],
 });
 
@@ -229,6 +228,16 @@ function questionChange(question) {
       return JSON.parse(JSON.stringify(question));
     }
     return q;
+  });
+}
+function saveSurvey() {
+  console.log("s d", surveyData.value);
+  store.dispatch("saveSurvey", surveyData.value).then((res) => {
+    console.log("saveSurvey res", res);
+    router.push({
+      name: "SurveyView",
+      params: { id: res.data.data.id },
+    });
   });
 }
 </script>

@@ -12,7 +12,7 @@ const tmpSurvey = [
             "My name is Zura.<br>I am Web Developer with 9+ years of experience, free educational content creator, CTO, Lecturer and father of two wonderful daughters.<br><br>The purpose of the channel is to share my several years of experience with beginner developers.<br>Teach them what I know and make my experience as a lesson for others.",
         created_at: "2021-12-20 18:00:00",
         updated_at: "2021-12-20 18:00:00",
-        expire_date: "2021-12-31 18:00:00",
+        expired_date: "2021-12-31 18:00:00",
         questions: [
             {
                 id: 1,
@@ -179,7 +179,7 @@ const tmpSurvey = [
         description: `Laravel is a web application framework with expressive, elegant syntax. We’ve already laid the foundation — freeing you to create without sweating the small things.`,
         created_at: "2021-12-20 18:00:00",
         updated_at: "2021-12-20 18:00:00",
-        expire_date: "2021-12-31 18:00:00",
+        expired_date: "2021-12-31 18:00:00",
         questions: [],
     },
     {
@@ -192,7 +192,7 @@ const tmpSurvey = [
         description: `Vue (pronounced /vjuː/, like view) is a progressive framework for building user interfaces. Unlike other monolithic frameworks, Vue is designed from the ground up to be incrementally adoptable.`,
         created_at: "2021-12-21 17:00:00",
         updated_at: "2021-12-21 17:00:00",
-        expire_date: "2021-12-31 00:00:00",
+        expired_date: "2021-12-31 00:00:00",
         questions: [],
     },
     {
@@ -205,7 +205,7 @@ const tmpSurvey = [
         description: `A utility-first CSS framework packed with classes like <code>flex</code>, <code>pt-4</code>, <code>text-center</code> and <code>rotate-90</code> that can be composed to build any design, directly in your markup.`,
         created_at: "2021-12-21 14:00:00",
         updated_at: "2021-12-21 14:00:00",
-        expire_date: "2021-12-31 00:00:00",
+        expired_date: "2021-12-31 00:00:00",
         questions: [],
     },
 ];
@@ -220,6 +220,18 @@ const store = createStore({
     },
     getters: {},
     mutations: {
+        saveSurvey: (state, survey) => {
+            console.log({ survey });
+            state.surveys = [...state.surveys, survey.data];
+        },
+        updateSurvey: (state, survey) => {
+            state.surveys = state.surveys.map((s) => {
+                if (s.id == survey.data.id) {
+                    return survey.data;
+                }
+                return s;
+            });
+        },
         logout: (state) => {
             state.user.data = {};
             state.user.token = null;
@@ -290,6 +302,27 @@ const store = createStore({
                 commit("logout");
                 return res;
             });
+        },
+        saveSurvey({ commit }, survey) {
+            let response;
+            if (survey.id) {
+                console.log("updated");
+                response = axiosClient
+                    .put(`/surveys/${survey.id}`, survey)
+                    .then((res) => {
+                        console.log(res);
+                        commit("updateSurvey", res.data);
+                        return res;
+                    });
+            } else {
+                console.log("created");
+                response = axiosClient.post("/surveys", survey).then((res) => {
+                    console.log(res);
+                    commit("saveSurvey", res.data);
+                    return res;
+                });
+            }
+            return response;
         },
     },
     modules: {},

@@ -59,6 +59,10 @@ class SurveyController extends Controller
      */
     public function update(UpdateSurveyRequest $request, Survey $survey)
     {
+        if ($request->user()->id !== $survey->user_id) {
+            return abort(403, 'Unauthorized Actions');
+        }
+        // return $request->user();
         $survey->update($request->validated());
         return new SurveyResource($survey);
     }
