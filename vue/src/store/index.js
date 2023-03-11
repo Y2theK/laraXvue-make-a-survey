@@ -166,7 +166,7 @@ const tmpSurvey = [
                 question: "What do you think about TheCodeholic channel?",
                 description:
                     "Write your honest opinion. Everything is anonymous.",
-                data: null,
+                data: {},
             },
         ],
     },

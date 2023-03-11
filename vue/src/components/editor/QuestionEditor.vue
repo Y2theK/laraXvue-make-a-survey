@@ -123,7 +123,9 @@
           <!--/ Add new option -->
         </h4>
         <div
-          v-if="!model.data.options || !model.data.options.length"
+          v-if="
+            !model.data || !model.data.options || !model.data.options.length
+          "
           class="text-xs text-gray-600 text-center py-3"
         >
           You don't have any options defined
