@@ -353,6 +353,9 @@ const store = createStore({
                     throw err;
                 });
         },
+        deleteSurvey({ commit }, id) {
+            return axiosClient.delete(`/surveys/${id}`);
+        },
     },
     modules: {},
 });

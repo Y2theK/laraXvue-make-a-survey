@@ -251,6 +251,15 @@ if (route.params.id) {
   });
   // console.log(surveyData.value);
 }
+function deleteSurvey() {
+  if (confirm("Are you sure to delete?")) {
+    store.dispatch("deleteSurvey", route.params.id).then(() => {
+      router.push({
+        name: "Survey",
+      });
+    });
+  }
+}
 function addQuestion(index) {
   const newQuestion = {
     id: uuidv4(),

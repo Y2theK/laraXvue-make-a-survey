@@ -134,6 +134,9 @@ class SurveyController extends Controller
             return abort(403, 'Unauthorized Action');
         }
         $survey->delete();
+        if ($survey->image) {
+            File::delete(public_path($survey->image));
+        }
         return response('', 200);
     }
 }
