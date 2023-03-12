@@ -6,10 +6,13 @@ use Exception;
 use App\Models\Survey;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\File;
 use App\Http\Resources\SurveyResource;
 use App\Http\Requests\StoreSurveyRequest;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\UpdateSurveyRequest;
+use App\Models\SurveyQuestion;
 
 class SurveyController extends Controller
 {
@@ -43,7 +46,35 @@ class SurveyController extends Controller
 
         $survey = Survey::create($data);
 
+        //create questions
+        foreach ($data['questions'] as $question) {
+            $question['survey_id'] = $survey->id;
+            $this->createQuestion($question);
+        }
+
         return new SurveyResource($survey);
+    }
+    private function createQuestion($question)
+    {
+        if (is_array($question['data'])) {
+            $question['data'] = json_encode($question['data']);
+        }
+
+        $validator = Validator::make($question, [
+            'question' => 'required|string',
+            'type' => ['required',Rule::in([
+                Survey::TYPE_TEXT,
+                Survey::TYPE_TEXTAREA,
+                Survey::TYPE_SELECT,
+                Survey::TYPE_RADIO,
+                Survey::TYPE_CHECKBOX,
+            ])],
+            'survey_id' => 'exists:surveys,id',
+            'data' => 'present',
+            'description' => 'string|nullable'
+            ]);
+
+        return SurveyQuestion::create($validator->validated());
     }
     private function saveImage($image)
     {
