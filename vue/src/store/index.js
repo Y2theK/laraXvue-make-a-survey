@@ -321,17 +321,19 @@ const store = createStore({
             if (survey.id) {
                 console.log("updated");
                 response = axiosClient
-                    .patch(`/surveys/${survey.id}`, survey)
+                    .put(`/surveys/${survey.id}`, survey)
                     .then((res) => {
                         // console.log(res);
-                        commit("updateSurvey", res.data);
+                        commit("setCurrentSurvey", res.data);
+                        // commit("updateSurvey", res.data);
                         return res;
                     });
             } else {
                 console.log("created");
                 response = axiosClient.post("/surveys", survey).then((res) => {
                     // console.log(res);
-                    commit("saveSurvey", res.data);
+                    commit("setCurrentSurvey", res.data);
+                    // commit("saveSurvey", res.data);
                     return res;
                 });
             }

@@ -11,6 +11,7 @@
       <!-- {{ model }} -->
       <div class="shadow sm:rounded-md sm:overflow-hidden">
         <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
+          <pre>{{ surveyData }}</pre>
           <div>
             <label for="block text-sm font-medium text-gray-700">Image</label>
             <div class="mt-1 flex items-center">
@@ -210,15 +211,17 @@ watch(
       ...JSON.parse(JSON.stringify(newVal)),
       status: newVal.status !== "draft",
     };
+    console.log(surveyData.value);
   }
 );
-console.log("id", route.params.id);
+// console.log("id", route.params.id);
 if (route.params.id) {
-  store.dispatch("getSurvey", route.params.id);
-  // .then((res) => {
-  //   console.log(res);
-  //   surveyData.data = res.data.data;
-  // });
+  store.dispatch("getSurvey", route.params.id).then((res) => {
+    // router.push({
+    //   name: "SurveyView",
+    //   params: { id: route.params.id },
+    // });
+  });
   // console.log(surveyData.value);
 }
 function addQuestion(index) {
@@ -261,6 +264,7 @@ function saveSurvey() {
   // console.log("s d", surveyData.value);
   store.dispatch("saveSurvey", surveyData.value).then((res) => {
     // console.log("saveSurvey res", res);
+    surveyData.image_url = res.data.data.image_url;
     router.push({
       name: "SurveyView",
       params: { id: res.data.data.id },
