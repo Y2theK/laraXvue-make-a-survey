@@ -30,7 +30,7 @@
         :key="survey.id"
         class="flex flex-col py-4 px-6 shadow-md bg-white hover:bg-gray-50 h-[470px]"
       >
-        <img :src="survey.image" alt="" class="w-full object-cover h-48" />
+        <img :src="survey.image_url" alt="" class="w-full object-cover h-48" />
         <h4 class="mt-4 text-lg font-bold">{{ survey.title }}</h4>
         <div v-html="survey.description" class="flex-1 overflow-hidden"></div>
         <div class="flex justify-between items-center mt-3">
@@ -85,10 +85,12 @@ import PageComponent from "../components/PageComponent.vue";
 import store from "../store";
 import { computed } from "vue";
 
-const surveys = computed(() => store.state.surveys);
+store.dispatch("getSurveys");
+const surveys = computed(() => store.state.surveys.data);
 function deleteSurvey(survey) {
   if (confirm("Are you sure to delete this survey?")) {
     //delete survey
+    store.dispatch("deleteSurvey", survey.id);
   }
 }
 </script>
