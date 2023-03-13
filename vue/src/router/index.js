@@ -4,6 +4,7 @@ import AuthLayout from "../components/AuthLayout.vue";
 import Dashboard from "../views/Dashboard.vue";
 import Survey from "../views/Survey.vue";
 import SurveyView from "../views/SurveyView.vue";
+import SurveyPublishView from "../views/SurveyPublishView.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import store from "../store";
@@ -24,6 +25,11 @@ const routes = [
             },
             { path: "/survey/:id", name: "SurveyView", component: SurveyView },
         ],
+    },
+    {
+        path: "/views/survey/:slug",
+        name: SurveyPublishView,
+        component: SurveyPublishView,
     },
     {
         path: "/auth",

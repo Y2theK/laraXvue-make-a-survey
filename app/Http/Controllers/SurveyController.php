@@ -123,6 +123,12 @@ class SurveyController extends Controller
         }
         return new SurveyResource($survey);
     }
+    public function getSurveyBySlug(Survey $survey)
+    {
+        // $survey = Survey::where('slug', $slug)->first();    //checking with where
+
+        return new SurveyResource($survey);
+    }
 
     /**
      * Update the specified resource in storage.
