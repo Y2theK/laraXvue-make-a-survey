@@ -62,8 +62,24 @@ const loading = computed(() => store.state.currentSurvey.loading);
 // console.log(route.params.slug);
 store.dispatch("getSurveyBySlug", route.params.slug);
 
-function submitAnotherResponse() {}
-function submitSurvey() {}
+function submitSurvey() {
+  console.log(JSON.stringify(answers.value, undefined, 2));
+  console.log(answers.value);
+  store
+    .dispatch("saveSurveyAnswer", {
+      surveyId: survey.value.id,
+      answers: answers.value,
+    })
+    .then((res) => {
+      if (res.status === 201) {
+        surveyFinished.value = true;
+      }
+    });
+}
+function submitAnotherResponse() {
+  surveyFinished.value = false;
+  answers.value = {};
+}
 </script>
 
 <style>
