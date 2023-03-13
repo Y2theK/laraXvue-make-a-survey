@@ -29,7 +29,11 @@
     </template>
     <div class="flex justify-center" v-if="surveyLoading">Loading ...</div>
     <div v-else>
-      <form action="" @submit.prevent="saveSurvey()">
+      <form
+        action=""
+        @submit.prevent="saveSurvey()"
+        class="opacity-0 animate-fade-in-down"
+      >
         <!-- {{ model }} -->
         <div class="shadow sm:rounded-md sm:overflow-hidden">
           <div class="px-4 py-5 bg-white space-y-6 sm:p-6">

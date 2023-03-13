@@ -24,10 +24,13 @@
         Add New Survey
       </router-link>
     </div>
-    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
+    <div class="flex justify-center" v-if="surveys.loading">Loading...</div>
+    <div v-else class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
       <SurveyListItem
-        v-for="survey in surveys"
+        v-for="(survey, index) in surveys.data"
         :key="survey.id"
+        class="opacity-0 animate-fade-in-down"
+        :style="{ animationDelay: `${index * 0.1}s` }"
         :survey="survey"
         @delete="deleteSurvey(survey)"
       />
@@ -41,7 +44,7 @@ import store from "../store";
 import { computed } from "vue";
 
 store.dispatch("getSurveys");
-const surveys = computed(() => store.state.surveys.data);
+const surveys = computed(() => store.state.surveys);
 function deleteSurvey(survey) {
   if (confirm("Are you sure to delete this survey?")) {
     //delete survey
