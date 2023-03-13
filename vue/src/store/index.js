@@ -217,6 +217,7 @@ const store = createStore({
         },
         surveys: {
             loading: false,
+            links: [],
             data: [],
         },
         currentSurvey: {
@@ -248,6 +249,7 @@ const store = createStore({
         },
         setSurveys(state, surveys) {
             state.surveys.data = surveys.data;
+            state.surveys.links = surveys.meta.links;
         },
         setSurveysLoading(state, isLoading) {
             state.surveys.loading = isLoading;
@@ -362,10 +364,11 @@ const store = createStore({
             }
             return response;
         },
-        getSurveys({ commit }) {
+        getSurveys({ commit }, { url = null } = {}) {
+            url = url || "/surveys";
             commit("setSurveysLoading", true);
             return axiosClient
-                .get("/surveys")
+                .get(url)
                 .then((res) => {
                     commit("setSurveysLoading", false);
                     commit("setSurveys", res.data);

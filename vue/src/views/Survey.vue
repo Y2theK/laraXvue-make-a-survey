@@ -25,15 +25,41 @@
       </router-link>
     </div>
     <div class="flex justify-center" v-if="surveys.loading">Loading...</div>
-    <div v-else class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
-      <SurveyListItem
-        v-for="(survey, index) in surveys.data"
-        :key="survey.id"
-        class="opacity-0 animate-fade-in-down"
-        :style="{ animationDelay: `${index * 0.1}s` }"
-        :survey="survey"
-        @delete="deleteSurvey(survey)"
-      />
+    <div v-else>
+      <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
+        <SurveyListItem
+          v-for="(survey, index) in surveys.data"
+          :key="survey.id"
+          class="opacity-0 animate-fade-in-down"
+          :style="{ animationDelay: `${index * 0.1}s` }"
+          :survey="survey"
+          @delete="deleteSurvey(survey)"
+        />
+      </div>
+      <div class="flex justify-center mt-5">
+        <nav
+          class="relative z-0 inline-flex justify-center rounded-md shadow-sm -space-x-px"
+          aria-label="Pagination"
+        >
+          <a
+            v-for="(link, index) in surveys.links"
+            :key="index"
+            href="#"
+            @click="goForPage($event, link)"
+            aria-current="page"
+            class="relative inline-flex items-center px-4 py-2 border text-sm font-medium whitespace-nowrap"
+            :class="[
+              link.active
+                ? 'z-10 bg-indigo-50 border-indigo-500 text-indigo-600'
+                : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50',
+              index === 0 ? 'rounded-l-md bg-gray-100 text-gray-700' : '',
+              index === surveys.links.length - 1 ? 'rounded-r-md' : '',
+            ]"
+            :disabled="!link.url"
+            v-html="link.label"
+          ></a>
+        </nav>
+      </div>
     </div>
   </PageComponent>
 </template>
@@ -52,6 +78,13 @@ function deleteSurvey(survey) {
       store.dispatch("getSurveys");
     });
   }
+}
+function goForPage(ev, link) {
+  ev.preventDefault();
+  if (!link.url || link.active) {
+    return;
+  }
+  store.dispatch("getSurveys", { url: link.url });
 }
 </script>
 
