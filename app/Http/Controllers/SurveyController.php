@@ -12,8 +12,11 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\File;
 use App\Http\Resources\SurveyResource;
 use App\Http\Requests\StoreSurveyRequest;
+use App\Http\Requests\SurveyAnswerRequest;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\UpdateSurveyRequest;
+use App\Models\SurveyAnswer;
+use App\Models\SurveyQuestionAnswer;
 
 class SurveyController extends Controller
 {
@@ -128,6 +131,32 @@ class SurveyController extends Controller
         // $survey = Survey::where('slug', $slug)->first();    //checking with where
 
         return new SurveyResource($survey);
+    }
+
+    public function saveSurveyAnswers(Survey $survey, SurveyAnswerRequest $request)
+    {
+        // var_dump($request->all());
+        $validated = $request->validated();
+        $surveyAnswer = SurveyAnswer::create([
+            'survey_id' => $survey->id,
+            'start_date' => date('Y-m-d H:m:s'),
+            'end_date' => date('Y-m-d H:m:s')
+        ]);
+
+
+        foreach ($validated['answers'] as $questionId => $answer) {
+            //we need to check this questions is belong to this survey or not
+            $question = SurveyQuestion::where(['id' => $questionId, 'survey_id' => $survey->id])->get();
+            if (!$question) {
+                return response("Invalid Question ID \"$questionId\"", 400);
+            }
+            SurveyQuestionAnswer::create([
+                'survey_answer_id' => $surveyAnswer->id,
+                'survey_question_id' => $questionId,
+                'answer' => is_array($answer) ? json_encode($answer) : $answer //checkbox answer are array
+            ]);
+        }
+        return response('', 201);
     }
 
     /**

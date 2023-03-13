@@ -9,11 +9,11 @@
       </p>
     </div>
     <div class="mt-3">
-      <div v-if="question.type === 'radio'">
+      <div v-if="question.type === 'radio'" class="flex items-center">
         <div
           v-for="option in question.data.options"
           :key="option.uuid"
-          class="flex items-center"
+          class="flex items-center mr-12"
         >
           <input
             type="radio"
@@ -30,12 +30,12 @@
           >
         </div>
       </div>
-      <div v-else-if="question.type === 'checkbox'">
-        {{ model }}
+      <div v-else-if="question.type === 'checkbox'" class="flex items-center">
+        <!-- {{ model }} -->
         <div
           v-for="option in question.data.options"
           :key="option.uuid"
-          class="flex items-center"
+          class="flex items-center mr-12"
         >
           <input
             type="checkbox"
@@ -47,7 +47,7 @@
           />
           <label
             :for="option.uuid"
-            class="ml-3 block text-sm font-medium text-gray-700"
+            class="ml-3 text-sm font-medium text-gray-700"
             >{{ option.text }}</label
           >
         </div>
