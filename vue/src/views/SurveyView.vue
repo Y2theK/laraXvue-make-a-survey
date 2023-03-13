@@ -300,6 +300,10 @@ function saveSurvey() {
   // console.log("s d", surveyData.value);
   store.dispatch("saveSurvey", surveyData.value).then((res) => {
     // console.log("saveSurvey res", res);
+    store.commit("notify", {
+      type: "success",
+      message: "Survey was saved successfully...",
+    });
     surveyData.image_url = res.data.data.image_url;
     router.push({
       name: "SurveyView",

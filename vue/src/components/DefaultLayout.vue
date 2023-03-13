@@ -140,6 +140,7 @@
     </Disclosure>
 
     <router-view></router-view>
+    <Notification />
   </div>
 </template>
 
@@ -153,6 +154,7 @@ import {
   MenuItem,
   MenuItems,
 } from "@headlessui/vue";
+import Notification from "../components/Notification.vue";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { useStore } from "vuex";
 import { computed } from "vue";
@@ -176,7 +178,7 @@ export default {
     Bars3Icon,
     // MenuIcon,
     // XIcon,
-    // Notification,
+    Notification,
   },
   setup() {
     const store = useStore();
