@@ -18,7 +18,7 @@ class DashboardController extends Controller
 
 
         //latest survey
-        $latestSurvey = Survey::query()->where('usuer_id', $user->id)->orderBy('created_at', 'desc')->first();
+        $latestSurvey = Survey::query()->where('user_id', $user->id)->orderBy('created_at', 'desc')->first();
 
 
         //total answers count
@@ -34,7 +34,7 @@ class DashboardController extends Controller
         ->where('surveys.user_id', $user->id)
         ->orderBy('end_date', 'desc')
         ->limit(5)
-        ->getModel('survey_answers.*');
+        ->getModels('survey_answers.*');
 
         return response([
             'totalSurveys' => $totalSurveys,
