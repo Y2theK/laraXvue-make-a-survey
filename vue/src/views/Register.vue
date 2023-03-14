@@ -37,30 +37,37 @@
     </div>
 
     <form class="mt-8 space-y-6" @submit="register">
-      <div
-        v-if="errorMsg"
-        class="py-3 px-4 bg-red-500 text-white rounded flex items-center justify-between"
-      >
-        {{ errorMsg }}
-        <span
-          @click="errorMsg = ''"
-          class="w-8 h-8 flex items-center justify-center rounded-full transition-colors cursor-pointer hover:bg-[rgba(0,0,0,0.2)]"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-6 h-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </span>
+      <!-- {{ errorMsg }} -->
+      <div v-if="Object.keys(errorMsg).length">
+        <div v-for="(field, i) of Object.keys(errorMsg)" :key="i">
+          <div v-for="(error, ind) of errorMsg[field] || []" :key="ind">
+            <div
+              v-if="Object.keys(errorMsg).length"
+              class="py-2 px-4 mb-1 bg-red-500 text-white rounded flex items-center justify-between"
+            >
+              {{ error }}
+              <span
+                @click="errorMsg = ''"
+                class="w-6 h-6 flex items-center justify-center rounded-full transition-colors cursor-pointer hover:bg-[rgba(0,0,0,0.2)]"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-4 h-4"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
       <input type="hidden" name="remember" value="true" />
 
@@ -121,7 +128,12 @@
 
       <div>
         <button
+          :disabled="loading"
           type="submit"
+          :class="{
+            'cursor-not-allowed': loading,
+            'hover:bg-indigo-500': loading,
+          }"
           class="group relative flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           <span class="absolute inset-y-0 left-0 flex items-center pl-3">
@@ -130,6 +142,27 @@
               aria-hidden="true"
             />
           </span>
+          <svg
+            v-if="loading"
+            class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              class="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              stroke-width="4"
+            ></circle>
+            <path
+              class="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
+          </svg>
           Sign Up
         </button>
       </div>
@@ -142,23 +175,27 @@ import store from "../store";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { LockClosedIcon } from "@heroicons/vue/20/solid";
-const errorMsg = ref("");
+const errorMsg = ref({});
 const user = {
   name: "",
   email: "",
   password: "",
   password_confirmation: "",
 };
+const loading = ref(false);
 const router = useRouter();
 function register(ev) {
   ev.preventDefault();
+  loading.value = true;
   store
     .dispatch("register", user)
     .then(() => {
+      loading.value = false;
       router.push({ name: "Dashboard" });
     })
     .catch((err) => {
-      errorMsg.value = err.response.data.message;
+      loading.value = false;
+      errorMsg.value = err.response.data.errors;
       console.log(err);
     });
 }
