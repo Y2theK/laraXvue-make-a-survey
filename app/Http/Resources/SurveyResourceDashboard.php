@@ -2,11 +2,11 @@
 
 namespace App\Http\Resources;
 
+use Nette\Utils\DateTime;
 use Illuminate\Support\Facades\URL;
-use App\Http\Resources\SurveyQuestionResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SurveyResource extends JsonResource
+class SurveyResourceDashboard extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -22,12 +22,12 @@ class SurveyResource extends JsonResource
             'title' => $this->title,
             'slug' => $this->slug,
             'image_url' => $this->image ? URL::to($this->image) : null,
-            'status' => !!$this->status,
+            'status' => !!$this->status,  // to return 1 => true , 0 => false
             'description' => $this->description,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'created_at' => (new DateTime($this->created_at))->format('Y-m-d H:i:s'),
             'expired_date' => $this->expired_date,
-            'questions' => SurveyQuestionResource::collection($this->questions)
+            'questions' => $this->questions()->count(),
+            'answers' => $this->answers()->count(),
         ];
     }
 }

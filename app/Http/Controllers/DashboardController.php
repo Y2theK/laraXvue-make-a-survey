@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\SurveyAnswersResource;
+use App\Http\Resources\SurveyResourceDashboard;
 use App\Models\Survey;
 use App\Models\SurveyAnswer;
 use Illuminate\Http\Request;
@@ -34,11 +35,12 @@ class DashboardController extends Controller
         ->where('surveys.user_id', $user->id)
         ->orderBy('end_date', 'desc')
         ->limit(5)
+        // ->get();
         ->getModels('survey_answers.*');
 
         return response([
             'totalSurveys' => $totalSurveys,
-            'lastestSurvey' => $latestSurvey,
+            'latestSurvey' => $latestSurvey ? new SurveyResourceDashboard($latestSurvey) : null,
             'totalAnswers' => $totalAnswers,
             'latestAnswers' => SurveyAnswersResource::collection($lastestAnswers)
         ]);

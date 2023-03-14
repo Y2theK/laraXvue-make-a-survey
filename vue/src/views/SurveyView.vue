@@ -131,6 +131,7 @@
             </div>
             <!--/ Expire Date -->
             <!-- Status -->
+            <!-- {{ surveyData.status }} -->
             <div class="flex items-start">
               <div class="flex items-center h-5">
                 <input
@@ -240,7 +241,7 @@ watch(
   (newVal, oldVal) => {
     surveyData.value = {
       ...JSON.parse(JSON.stringify(newVal)),
-      status: newVal.status !== "draft",
+      status: newVal.status,
     };
     // console.log(surveyData.value);
   }
